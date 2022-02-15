@@ -36,7 +36,7 @@ def new_restorant(restorant_ratings):
     return restorant_ratings
 
 def change_random_rating(restorant_ratings):
-    """prompts user to """
+    """takes in current ratings, prompts user to update a random restaurant's rating, returns updated rating"""
     answer = input("Do you want to change a random restorant's rating? Press Y for Yes. ")
 
     if answer.upper() == "Y":
@@ -58,6 +58,29 @@ def change_random_rating(restorant_ratings):
     return restorant_ratings
 
 
+def custom_restaurant_rating_change(restorant_ratings):
+    answer = input("Do you want to change a specific restorant's rating? Press Y for Yes. ")
+
+    if answer.upper() == "Y":    
+        rest_name = input("Name of the restaurant you want to change? ")
+        #check if the name they provided is in the dict already.
+        if rest_name in restorant_ratings:
+            #ask for the new rating and update dictionary
+            rest_rating = input("What is the new rating? ")
+        else:
+
+            print("We don't have this restaurant in our list.")
+            answer = input("Do you want to add a rating for this restaurant? Y/N ")
+            if answer.upper() != "Y":
+                return restorant_ratings
+            else:
+                rest_rating = input("What is the rating? ")
+
+        restorant_ratings[rest_name] = rest_rating
+        
+
+    return restorant_ratings
+
 #creates a usable dictionary from the original file
 current_ratings_dict = create_rating_dictionary('scores.txt')
 
@@ -65,15 +88,19 @@ current_ratings_dict = create_rating_dictionary('scores.txt')
 print_ratings(current_ratings_dict)
 
 #reassigns current_ratings_dict to whatever results from the prompts to add new restaurants
-current_ratings_dict = new_restorant(current_ratings_dict)
+#current_ratings_dict = new_restorant(current_ratings_dict)
 
 #sorts prints again with the new restaurants added
-print_ratings(current_ratings_dict)
+#print_ratings(current_ratings_dict)
 
 #prompts user to change a random restaurant's rating
-current_ratings_dict = change_random_rating(current_ratings_dict)
+#current_ratings_dict = change_random_rating(current_ratings_dict)
 
 #sorts prints again with the restaurant's rating updated
+#print_ratings(current_ratings_dict)
+
+#prompts user to change a selected restaurant's rating
+current_ratings_dict = custom_restaurant_rating_change(current_ratings_dict)
+
+##sorts and prints the ratings
 print_ratings(current_ratings_dict)
-
-
