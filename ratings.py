@@ -1,5 +1,5 @@
 """Restaurant rating lister."""
-
+import random
 
 def create_rating_dictionary(filename):
     """reads a file of restaurant ratings and returns a dictionary with the info inside"""
@@ -18,16 +18,7 @@ def create_rating_dictionary(filename):
 def print_ratings(rating_dict):
 
     """takes in a dictionary of restaurant ratings and prints them in alphabetical order by restaurant"""
-    #declare blank list
-    #rest_names = []
-    '''
-    for restorant in rating_dict.keys():
-        #append the list with each rest name
-        rest_names.append(restorant)
-    
-    #sort this list
-    rest_names.sort()
-    '''
+
     #for each item in restaurant list, retrieve the corresponding value in the dictionary to print the rating
     for restorant in sorted(rating_dict.keys()):
         print(f"{restorant} is rated at {rating_dict[restorant]}")
@@ -44,6 +35,28 @@ def new_restorant(restorant_ratings):
             break
     return restorant_ratings
 
+def change_random_rating(restorant_ratings):
+    """prompts user to """
+    answer = input("Do you want to change a random restorant's rating? Press Y for Yes. ")
+
+    if answer.upper() == "Y":
+        #convert restorant_ratings keys into a list
+        names_list = list(restorant_ratings.keys())
+        
+        #random choice from the list
+        random_rest = random.choice(names_list)
+
+        #print the current rating from the dictionary of that item
+        print(f"The current rating of {random_rest} is {restorant_ratings[random_rest]}.")
+
+        #ask for a new rating
+        new_rating = input("The new rating please ")
+        
+        #update the dictionary
+        restorant_ratings[random_rest] = new_rating
+    
+    return restorant_ratings
+
 
 #creates a usable dictionary from the original file
 current_ratings_dict = create_rating_dictionary('scores.txt')
@@ -55,6 +68,12 @@ print_ratings(current_ratings_dict)
 current_ratings_dict = new_restorant(current_ratings_dict)
 
 #sorts prints again with the new restaurants added
+print_ratings(current_ratings_dict)
+
+#prompts user to change a random restaurant's rating
+current_ratings_dict = change_random_rating(current_ratings_dict)
+
+#sorts prints again with the restaurant's rating updated
 print_ratings(current_ratings_dict)
 
 
