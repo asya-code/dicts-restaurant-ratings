@@ -1,55 +1,60 @@
 """Restaurant rating lister."""
 
 
-# put your code here
+def create_rating_dictionary(filename):
+    """reads a file of restaurant ratings and returns a dictionary with the info inside"""
 
-#declare a blank dictionary
+    rating_dictionary = {}
 
-
-#either use sys.argv or open(filename)
-import re
-
-
-def restorant_rating(filename):
-    
-    working_file = open(filename)
-
-    #for each line in the file:
-        #rstrip the line
-        #separate them out into usable pieces of information by "splitting" with character ":"
-        #insert the pair into a dictionary with the two pieces of information
-    restorant_rating = {}
-
-    for line in working_file:
+    for line in open(filename):
         line = line.rstrip()
         res_info = line.split(":")
-        name = res_info[0]
-        rating = res_info[1]
-        restorant_rating[name] = rating
+
+        rating_dictionary[res_info[0]] = res_info[1]
     
-    return restorant_rating
+    return rating_dictionary
 
 
-def rating_ordered(restorant_ratings):
-    
+def print_ratings(rating_dict):
+
+    """takes in a dictionary of restaurant ratings and prints them in alphabetical order by restaurant"""
     #declare blank list
-    rest_names = []
-
-    
-    for restorant in restorant_ratings.keys():
+    #rest_names = []
+    '''
+    for restorant in rating_dict.keys():
         #append the list with each rest name
         rest_names.append(restorant)
     
     #sort this list
     rest_names.sort()
-
+    '''
     #for each item in restaurant list, retrieve the corresponding value in the dictionary to print the rating
-    for restorant in rest_names:
-        print(f"{restorant} is rated at {restorant_ratings[restorant]}")
+    for restorant in sorted(rating_dict.keys()):
+        print(f"{restorant} is rated at {rating_dict[restorant]}")
 
 
+def new_restorant(restorant_ratings):
+    while True:
+        answer = input("Do you want to add a restorant review? Y/N ")
+        if answer.upper() == "Y":
+            restorant_name = input("What is the name of the restorant? ")
+            restorant_rating = input("What is the rating? Number out of 5 ")
+            restorant_ratings[restorant_name] = restorant_rating
+        else:
+            break
+    return restorant_ratings
 
 
+#creates a usable dictionary from the original file
+current_ratings_dict = create_rating_dictionary('scores.txt')
 
+#sorts and prints the ratings
+print_ratings(current_ratings_dict)
+
+#reassigns current_ratings_dict to whatever results from the prompts to add new restaurants
+current_ratings_dict = new_restorant(current_ratings_dict)
+
+#sorts prints again with the new restaurants added
+print_ratings(current_ratings_dict)
 
 
